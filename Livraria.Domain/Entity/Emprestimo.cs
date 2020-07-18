@@ -9,6 +9,6 @@ namespace Livraria.Domain.Entity
         public int EmprestimoId { get; set; }
         public DateTime DatInicio { get; set; }
         public DateTime DataFim { get; set; }
-        public int UsuarioId { get; set; }
+        public int UserId { get; set; }
     }
 }

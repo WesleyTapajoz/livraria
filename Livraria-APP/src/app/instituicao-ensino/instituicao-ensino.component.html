@@ -1,0 +1,156 @@
+<app-titulo [titulo]="titulo"></app-titulo>
+<div class="d-flex">
+  <div class="form-inline mr-auto">
+    <div class="form-group mb-2">
+
+    </div>
+  </div>
+  <div>
+    <button class="btn btn-outline-primary" (click)="novaInstituicao(template)">
+      <i class="fa fa-plus-circle"></i>&nbsp;
+      Novo Evento
+    </button>
+  </div>
+</div>
+<br/>
+<table class="table table-striped">
+  <thead class="thead-light">
+    <tr>
+      <th>#</th>
+      <th>Nome</th>
+      <th>CNPJ</th>
+      <th>Endereço</th>
+      <th>Telefone</th>
+      <th>Ativo</th>
+      <th colspan="2">Opções</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="instituicoesEnsino && instituicoesEnsino.length">
+    <tr *ngFor="let instituicaoEnsino of instituicoesEnsino">
+      <td></td>
+      <td>{{instituicaoEnsino.nome}}</td>
+      <td>{{instituicaoEnsino.cnpj}}</td>
+      <td>{{instituicaoEnsino.endereco}}</td>
+      <td>{{instituicaoEnsino.telefone}}</td>
+      <td>{{instituicaoEnsino.ativo }}</td>
+      <td>
+        <div class="btn-group">
+          <button class="btn btn-sm btn-success" tooltip="Editar" (click)="openModal(template)">
+            <i class="fa fa-edit"></i>
+          </button>
+          &nbsp;
+          <button class="btn btn-sm btn-danger" tooltip="Inativar" (click)="openModal(enableTemplate, instituicaoEnsino)">
+            <i class="fa fa-user-times"></i>
+          </button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot *ngIf="!instituicoesEnsino">
+    <tr>
+      <td colspan="7" class="text-center">
+        <h4>
+          Nenhum resultado encontrado!
+        </h4>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Nova Instituição de Ensino</h4>
+    <button type="button" class="close pull-right"
+    aria-label="Close" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="registerForm">
+    <div class="form-row">
+      <div class="col-lg-8">
+        <form [formGroup]="registerForm">
+          <div class="form-group required">
+            <label for="">Nome:</label>
+            <input type="text" class="form-control" formControlName="nome" [ngClass]="{'is-invalid': registerForm.get('nome').errors &&
+            registerForm.get('nome').touched }" placeholder="Nome Instituição"  />
+            <div *ngIf="registerForm.get('nome').hasError('required') &&
+            registerForm.get('nome').touched" class="invalid-feedback">
+            Nome Completo é obrigatório.
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="">Endereço:</label>
+          <input class="form-control" type="text" formControlName="endereco" [ngClass]="{'is-invalid': registerForm.get('endereco').errors &&
+          registerForm.get('endereco').touched}" placeholder="Insira o endereço" />
+          <div *ngIf="registerForm.get('endereco').hasError('required') &&
+          registerForm.get('endereco').touched" class="invalid-feedback">
+          Endereço é obrigatório.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="">CNPJ:</label>
+        <input class="form-control" type="text" formControlName="cnpj" [ngClass]="{ 'is-invalid': registerForm.get('cnpj').errors &&
+        registerForm.get('cnpj').touched}" placeholder="Insira o CNPJ" />
+        <div *ngIf="registerForm.get('cnpj').hasError('required') &&
+        registerForm.get('cnpj').touched" class="invalid-feedback">
+        CNPJ é obrigatório.
+      </div>
+      <div *ngIf="registerForm.get('cnpj').hasError('cnpj')
+      && registerForm.get('cnpj').touched" class="invalid-feedback">
+      Deve ser um CNPJ válido.
+    </div>
+  </div>
+  <div class="form-group required">
+    <label for="">Telefone:</label>
+    <input type="text" class="form-control" formControlName="telefone" [ngClass]="{'is-invalid': registerForm.get('telefone').errors &&
+    registerForm.get('telefone').touched }"  placeholder="Insira o Telefone" />
+    <div *ngIf="registerForm.get('telefone').hasError('required') &&
+    registerForm.get('telefone').touched" class="invalid-feedback">
+    Nome Completo é obrigatório.
+  </div>
+</div>
+</form>
+</div>
+
+</div>
+</form>
+<div class="modal-footer d-flex">
+  <button class="btn btn-secondary" (click)="modalRef.hide()">
+    Fechar
+  </button>
+  <button class="btn btn-primary ml-auto" [disabled]="!registerForm.valid" (click)="salvar()"  >
+    Salvar
+  </button>
+</div>
+</div>
+</ng-template>
+
+<ng-template #enableTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{ instituicaoEnsino.nome }}</h4>
+    <button type="button" class="close pull-right"
+    aria-label="Close" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="registerForm">
+    <div class="form-row">
+      Tem certeza que deseja Inativar o Usuário?
+      <br/>
+      <br/>
+    </div>
+  </form>
+  <div class="modal-footer d-flex">
+    <button class="btn btn-secondary" (click)="modalRef.hide()">
+      Fechar
+    </button>
+    <button class="btn btn-danger ml-auto" (click)="instituicaoDisable(instituicaoEnsino)" >
+      Inativar
+    </button>
+  </div>
+</div>
+</ng-template>

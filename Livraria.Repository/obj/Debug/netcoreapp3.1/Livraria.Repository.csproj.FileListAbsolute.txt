@@ -1,8 +1,13 @@
-C:\Git\ewave-livraria-plenoII\Livraria.Repository\bin\Debug\netcoreapp3.1\Livraria.Repository.deps.json
-C:\Git\ewave-livraria-plenoII\Livraria.Repository\bin\Debug\netcoreapp3.1\Livraria.Repository.dll
-C:\Git\ewave-livraria-plenoII\Livraria.Repository\bin\Debug\netcoreapp3.1\Livraria.Repository.pdb
 C:\Git\ewave-livraria-plenoII\Livraria.Repository\obj\Debug\netcoreapp3.1\Livraria.Repository.csprojAssemblyReference.cache
 C:\Git\ewave-livraria-plenoII\Livraria.Repository\obj\Debug\netcoreapp3.1\Livraria.Repository.AssemblyInfoInputs.cache
 C:\Git\ewave-livraria-plenoII\Livraria.Repository\obj\Debug\netcoreapp3.1\Livraria.Repository.AssemblyInfo.cs
+C:\Git\ewave-livraria-plenoII\Livraria.Repository\bin\Debug\netcoreapp3.1\Livraria.Repository.deps.json
+C:\Git\ewave-livraria-plenoII\Livraria.Repository\bin\Debug\netcoreapp3.1\Livraria.Repository.runtimeconfig.json
+C:\Git\ewave-livraria-plenoII\Livraria.Repository\bin\Debug\netcoreapp3.1\Livraria.Repository.runtimeconfig.dev.json
+C:\Git\ewave-livraria-plenoII\Livraria.Repository\bin\Debug\netcoreapp3.1\Livraria.Repository.dll
+C:\Git\ewave-livraria-plenoII\Livraria.Repository\bin\Debug\netcoreapp3.1\Livraria.Repository.pdb
+C:\Git\ewave-livraria-plenoII\Livraria.Repository\bin\Debug\netcoreapp3.1\Livraria.Domain.dll
+C:\Git\ewave-livraria-plenoII\Livraria.Repository\bin\Debug\netcoreapp3.1\Livraria.Domain.pdb
+C:\Git\ewave-livraria-plenoII\Livraria.Repository\obj\Debug\netcoreapp3.1\Livraria.Repository.csproj.CopyComplete
 C:\Git\ewave-livraria-plenoII\Livraria.Repository\obj\Debug\netcoreapp3.1\Livraria.Repository.dll
 C:\Git\ewave-livraria-plenoII\Livraria.Repository\obj\Debug\netcoreapp3.1\Livraria.Repository.pdb

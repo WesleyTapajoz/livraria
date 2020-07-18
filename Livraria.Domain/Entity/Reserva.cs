@@ -9,6 +9,6 @@ namespace Livraria.Domain.Entity
         public int ReservaId { get; set; }
         public int UsuarioId { get; set; }
         public DateTime DataReserva { get; set; }
-
+        public int LivroId { get; set; }
     }
 }

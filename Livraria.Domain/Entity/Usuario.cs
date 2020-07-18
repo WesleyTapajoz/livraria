@@ -1,16 +1,13 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Livraria.Domain.Entity
 {
-    public class Usuario
-    {
-        public int UsuarioId { get; set; }
-        public string Nome { get; set; }
-        public int Endereço { get; set; }
-        public int CPF { get; set; }
-        public int Telefone { get; set; }
-        public int EMail { get; set; }
-    }
+    //public class Usuario :  IdentityUser
+    //{
+    //    public string Endereco { get; set; }
+    //    public string CPF { get; set; }
+
+    //    public virtual List<Reserva> Reservas { get; set; }      
+    //}
 }

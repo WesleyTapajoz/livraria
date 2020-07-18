@@ -1,0 +1,88 @@
+<app-titulo [titulo]="titulo"></app-titulo>
+<table class="table table-striped">
+  <thead class="thead-light">
+    <tr>
+      <th>
+        <!-- <button class="btn btn-outline-primary" (click)="alternarImagem()">
+          <i class="{{mostrarImagem ? 'fa fa-eye-slash' : 'fa fa-eye'}}"></i>
+        </button> -->
+      </th>
+      <th>#</th>
+      <th>Título</th>
+      <th>Gênero</th>
+      <th>Sinopse</th>
+      <th colspan="2">Opções</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="livros && livros.length">
+    <tr *ngFor="let livro of livros">
+      <td>
+        <!-- <img *ngIf="mostrarImagem" src="http://localhost:44324/resources/images/{{livro.imagemURL}}?_ts={{dataAtual}}"
+        [style.width.px]="imagemLargura" [style.margin.px]="imagemMargem"> -->
+      </td>
+      <td>{{livro.livroId}}</td>
+      <td>{{livro.titulo}}</td>
+      <td>{{livro.genero}}</td>
+      <td>{{livro.sinopse}}</td>
+      <td>
+        <div class="btn-group">
+          <button class="btn btn-sm btn-success" tooltip="Reservar" (click)="openModal(template, livro)">
+            <i class="fa fa-edit"></i>
+          </button>
+          &nbsp;
+          <button class="btn btn-sm btn-success" tooltip="Emprestimos" (click)="openModal(template)">
+            <i class="fa fa-eraser"></i>
+          </button>
+        </div>
+      </td>
+      <td>
+        <!-- <a [routerLink]="['/evento', livro.livroId, 'edit']" tooltip="Edição Detalhada" class="btn btn-sm btn-warning">
+          <i class="fa fa-edit"></i>
+        </a> -->
+      </td>
+    </tr>
+  </tbody>
+  <tfoot *ngIf="!livros">
+    <tr>
+      <td colspan="7" class="text-center">
+        <h4>
+          Nenhum resultado encontrado!
+        </h4>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{ livro.titulo }}</h4>
+    <button type="button" class="close pull-right"
+    aria-label="Close" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="registerForm">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label>Data Reserva</label>
+        <input type="text" class="form-control" bsDatepicker value="{{ dataReserva | DateTimeFormatPipe}}"
+        [(ngModel)]="dataReserva" [bsConfig]="{ dateInputFormat : 'DD/MM/YYYY' }" [ngClass]="{'is-invalid': registerForm.get('dataReserva').errors
+        && registerForm.get('dataReserva').touched}" formControlName="dataReserva" placeholder="">
+        <div *ngIf="registerForm.get('dataReserva').hasError('required')
+        && registerForm.get('dataReserva').touched" class="invalid-feedback">
+        Data e hora é obrigatório.
+      </div>
+    </div>
+  </div>
+</form>
+<div class="modal-footer d-flex">
+  <button class="btn btn-secondary" (click)="modalRef.hide()">
+    Fechar
+  </button>
+  <button class="btn btn-primary ml-auto" [disabled]="!registerForm.valid" (click)="reservar()">
+    Salvar
+  </button>
+</div>
+</div>
+</ng-template>
