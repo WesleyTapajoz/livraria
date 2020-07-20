@@ -12,7 +12,7 @@
         </member>
         <member name="M:Livraria.WebAPI.Controllers.ValuesController.GetInstituicoesEnsino">
             <summary>
-            Livros
+            InstituicoesEnsino
             </summary>
             <returns></returns>
         </member>

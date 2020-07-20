@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Livro } from '../_models/Livro';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,8 @@ import { map } from 'rxjs/operators';
 export class LivroService {
 
   constructor(private http: HttpClient) { }
-  baseURL = 'https://localhost:44324/api/Values';
-  baseURLLogin = 'https://localhost:44324/api/user/';
+  baseURL = environment.apiUrl + 'api/Values/';
+  baseURLLogin =  environment.apiUrl + 'api/user/';
 
 
   jwtHelper = new JwtHelperService();
@@ -28,6 +29,7 @@ export class LivroService {
             localStorage.setItem('token', user.token);
             this.decodedToken = this.jwtHelper.decodeToken(user.token);
             sessionStorage.setItem('username', this.decodedToken.unique_name);
+            sessionStorage.setItem('nameid', this.decodedToken.nameid);
           }
         })
       );
@@ -39,6 +41,27 @@ export class LivroService {
   }
 
   getAllLivros(): Observable<Livro[]> {
-    return this.http.get<Livro[]>(`${this.baseURL}/GetLivros`);
+    return this.http.get<Livro[]>(`${this.baseURL}GetLivros`);
   }
+
+  postUpload(file: File, name: string) {
+    const fileToUplaod = <File>file[0];
+    const formData = new FormData();
+    formData.append('file', fileToUplaod, name);
+
+    return this.http.post(`${this.baseURL}upload`, formData);
+  }
+
+  postLivro(model: any) {
+    return this.http.post(`${this.baseURL}AdicionarLivro`, model);
+  }
+
+  putLivro(model: any) {
+    return this.http.put(`${this.baseURL}AlterarLivro`, model);
+  }
+
+  livroDisable(model: any) {
+    return this.http.put(`${this.baseURL}LivroDisable`, model);
+  }
+
 }

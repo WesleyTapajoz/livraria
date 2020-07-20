@@ -21,6 +21,7 @@ export class UsuarioComponent implements OnInit {
 
     titulo = 'Usuários';
     registerForm: FormGroup;
+
     user: User;
     users: User[];
     modalRef: BsModalRef;
@@ -46,17 +47,17 @@ export class UsuarioComponent implements OnInit {
         this.registerForm = this.fb.group({
           fullName: ['', Validators.required],
           email: ['', [Validators.required, Validators.email]],
-          userName: ['', Validators.required],
+           userName: ['', Validators.required],
           cpf:  ['', Validators.required],
           endereco: [''],
           id: [this.user],
-          passwords: this.fb.group({
-            password: ['', [Validators.required, Validators.minLength(4)]],
-            confirmPassword: ['', Validators.required]
-          }, { validator: this.compararSenhas })
+          telefone: ['']
+          // passwords: this.fb.group({
+          //   password: ['', [Validators.required, Validators.minLength(4)]],
+          //   confirmPassword: ['', Validators.required]
+          // }, { validator: this.compararSenhas })
         });
       }
-
       compararSenhas(fb: FormGroup) {
         const confirmSenhaCtrl = fb.get('confirmPassword');
         if (confirmSenhaCtrl.errors == null || 'mismatch' in confirmSenhaCtrl.errors) {
@@ -74,33 +75,53 @@ export class UsuarioComponent implements OnInit {
         this.modalRef = this.modalService.show(template);
       }
 
+      novoUsuario(template: TemplateRef<any>){
+        this.openModal(template, new User() );
+      }
+
 
   userEdit() {
     if (this.registerForm.valid) {
       this.user = Object.assign(
         { password: this.registerForm.get('passwords.password').value },
         this.registerForm.value);
-      this.usuarioService.userEdit(this.user).subscribe(
-        () => {
-          this.getAllUser();
-          this.modalRef.hide();
-          this.toastr.success('Salvo com sucesso');
-        }, error => {
-          this.toastr.error(`Erro!: ${error.error}`);
+        this.usuarioService.userEdit(this.user).subscribe(
+          () => {
+            this.getAllUser();
+            this.modalRef.hide();
+            this.toastr.success('Salvo com sucesso');
+          }, error => {
+            this.toastr.error(`Erro!: ${error.error}`);
+          }
+          );
         }
-      );
-    }
-  }
+      }
 
   userDisable() {
-      this.usuarioService.userDisable(this.user).subscribe(
-        () => {
-           this.getAllUser();
-          this.modalRef.hide();
-          this.toastr.success('Salvo com sucesso');
-        }, error => {
-          this.toastr.error(`Erro!: ${error.error}`);
-        }
+    this.usuarioService.userDisable(this.user).subscribe(
+      () => {
+        this.getAllUser();
+        this.modalRef.hide();
+        this.toastr.success('Salvo com sucesso');
+      }, error => {
+        this.toastr.error(`Erro!: ${error.error}`);
+      }
       );
-  }
+    }
+
+
+    cadastrarUsuario() {
+      if (this.registerForm.valid) {
+        this.user = Object.assign({}, this.registerForm.value);
+          console.log('this.user',this.user);
+
+          this.usuarioService.adicionarUsuario(this.user).subscribe(
+            () => {
+              this.router.navigate(['/dashboard']);
+              this.toastr.success('Cadastro Realizado');
+            }, error => {
+              this.toastr.error('Erro!');
+            });
+          }
+        }
 }

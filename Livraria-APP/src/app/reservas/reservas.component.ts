@@ -30,43 +30,17 @@ export class ReservasComponent implements OnInit {
               private modalService: BsModalService) { }
 
   ngOnInit () {
-    this.getLivros();
+
   }
 
-  // getReservas() {
-  //   this.reservaService.getAllReservas().subscribe(
-  //     (_reservas: any) => {
-  //      this.reservas = _reservas;
-
-  //       console.log(_reservas);
-  //     }, error => {
-  //       this.toastr.error(`Erro ao tentar Carregar eventos: ${error}`);
-  //     });
-  // }
-
-  getLivros() {
-    this.livroService.getAllLivros().subscribe(
-      (_livros: Livro[]) => {
-       this.livros = _livros;
-
-        console.log(_livros);
+  getReservas() {
+    this.reservaService.getAllReservas().subscribe(
+      (_reservas: any) => {
+       this.reservas = _reservas;
+        console.log(_reservas);
       }, error => {
-        this.toastr.error(`Erro ao tentar Carregar eventos: ${error}`);
+        this.toastr.error(`Erro ao tentar Carregar: ${error}`);
       });
   }
 
-  reservar() {
-    this.livroService.getAllLivros().subscribe(
-      (_livros: Livro[]) => {
-       this.livros = _livros;
-
-        console.log(_livros);
-      }, error => {
-        this.toastr.error(`Erro ao tentar Carregar eventos: ${error}`);
-      });
-  }
-
-  openModal(template: TemplateRef<any>){
-    this.modalRef = this.modalService.show(template);
-  }
 }

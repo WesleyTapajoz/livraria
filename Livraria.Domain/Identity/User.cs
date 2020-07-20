@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Livraria.Domain.Entity;
+using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 
 namespace Livraria.Domain
@@ -11,6 +12,7 @@ namespace Livraria.Domain
         public string Telefone { get; set; }
         public bool Ativo { get; set; }
         public List<UserRole> UserRoles { get; set; }
+        public virtual List<Emprestimo> Emprestimos { get; set; }
 
     }
 }

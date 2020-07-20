@@ -26,16 +26,26 @@ namespace Livraria.Repository.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("DatInicio")
+                    b.Property<DateTime?>("DataEntrega")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataFim")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
+                    b.Property<DateTime>("DataInicio")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LivroId")
                         .HasColumnType("int");
 
                     b.HasKey("EmprestimoId");
+
+                    b.HasIndex("Id");
+
+                    b.HasIndex("LivroId");
 
                     b.ToTable("Emprestimos");
                 });
@@ -70,7 +80,7 @@ namespace Livraria.Repository.Migrations
                         new
                         {
                             InstituicaoEnsinoId = 1,
-                            Ativo = false,
+                            Ativo = true,
                             CPNJ = "02.402.105/0001-00",
                             Endereco = "Boa Esperança, Cuiabá",
                             Nome = "UFMT",
@@ -81,10 +91,9 @@ namespace Livraria.Repository.Migrations
             modelBuilder.Entity("Livraria.Domain.Entity.InstituicaoUsuario", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("InstituicaoUsuarioId")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
@@ -92,10 +101,13 @@ namespace Livraria.Repository.Migrations
                     b.Property<int?>("InstituicaoEnsinoId")
                         .HasColumnType("int");
 
+                    b.Property<int>("InstituicaoUsuarioId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id", "InstituicaoUsuarioId");
+                    b.HasKey("Id");
 
                     b.HasIndex("InstituicaoEnsinoId");
 
@@ -107,14 +119,14 @@ namespace Livraria.Repository.Migrations
                         new
                         {
                             Id = 3,
-                            InstituicaoUsuarioId = 1,
-                            Ativo = false
+                            Ativo = false,
+                            InstituicaoUsuarioId = 1
                         },
                         new
                         {
                             Id = 4,
-                            InstituicaoUsuarioId = 1,
-                            Ativo = false
+                            Ativo = false,
+                            InstituicaoUsuarioId = 1
                         });
                 });
 
@@ -151,40 +163,40 @@ namespace Livraria.Repository.Migrations
                         new
                         {
                             LivroId = 1,
-                            Ativo = false,
+                            Ativo = true,
                             Autor = "Shakespeare",
                             Genero = "Romance",
-                            ImagemURL = "",
+                            ImagemURL = "romeuejulieta.jpg",
                             Sinopse = "Romeu e Julieta é a primeira das grandes tragédias de William Shakespeare...",
                             Titulo = "Romeu e Julieta"
                         },
                         new
                         {
                             LivroId = 2,
-                            Ativo = false,
+                            Ativo = true,
                             Autor = "Shakespeare",
                             Genero = "Romance",
-                            ImagemURL = "",
+                            ImagemURL = "hamlet.jpg",
                             Sinopse = "A obsessão de uma vingança onde a dúvida e o desespero concentrados nos monólogos do príncipe Hamlet adquirem uma impressionante dimensão trágica...",
                             Titulo = "Hamlet"
                         },
                         new
                         {
                             LivroId = 3,
-                            Ativo = false,
+                            Ativo = true,
                             Autor = "Machado de Assis",
                             Genero = "Romance",
-                            ImagemURL = "",
+                            ImagemURL = "domcasmurro.jpg",
                             Sinopse = "Mas criando Capitu, a espantosa menina de 'olhos oblíquos e dissimulados', de 'olhos de ressaca'...",
                             Titulo = "Dom Casmurro"
                         },
                         new
                         {
                             LivroId = 4,
-                            Ativo = false,
+                            Ativo = true,
                             Autor = "Machado de Assis",
                             Genero = "Romance",
-                            ImagemURL = "",
+                            ImagemURL = "esauejaco.jpg",
                             Sinopse = "A libertação dos escravos e a Proclamação da República formam o pano de fundo para a história de irmãos gêmeos rivais...",
                             Titulo = "Esaú e Jacó"
                         });
@@ -328,7 +340,7 @@ namespace Livraria.Repository.Migrations
                             AccessFailedCount = 0,
                             Ativo = true,
                             CPF = "019.266.931-16",
-                            ConcurrencyStamp = "8e8caf4f-bd1b-4918-939a-be505e5d8a01",
+                            ConcurrencyStamp = "deadc150-c27a-49cb-b8fd-9a0447462150",
                             Email = "shakespeare@outlook.com",
                             EmailConfirmed = false,
                             Endereco = "Stratford-upon-Avon, Reino Unido",
@@ -345,7 +357,7 @@ namespace Livraria.Repository.Migrations
                             AccessFailedCount = 0,
                             Ativo = true,
                             CPF = "019.266.931-17",
-                            ConcurrencyStamp = "eb6a5ed5-32b8-42b8-96bf-7cbb335dbea4",
+                            ConcurrencyStamp = "64c3b57a-076c-457e-af60-c6b81d83df05",
                             Email = "machadosssis@outlook.com",
                             EmailConfirmed = false,
                             Endereco = "Rio de Janeiro, Brasil",
@@ -362,7 +374,7 @@ namespace Livraria.Repository.Migrations
                             AccessFailedCount = 0,
                             Ativo = true,
                             CPF = "019.266.931-17",
-                            ConcurrencyStamp = "8f8e1169-7e33-412f-9c3f-f859c9358bff",
+                            ConcurrencyStamp = "bb9170de-af42-4cad-a8ee-7a789e7cad73",
                             Email = "wesley@outlook.com",
                             EmailConfirmed = false,
                             Endereco = "Cuiabá, Brasil",
@@ -379,7 +391,7 @@ namespace Livraria.Repository.Migrations
                             AccessFailedCount = 0,
                             Ativo = true,
                             CPF = "019.266.931-17",
-                            ConcurrencyStamp = "08a2ddf0-510a-4079-986b-ab9ac301cd7e",
+                            ConcurrencyStamp = "3ded1f05-14df-44df-9cdf-d5e2e2678762",
                             Email = "tapajoz@outlook.com",
                             EmailConfirmed = false,
                             Endereco = "Várzea Grande, Brasil",
@@ -491,6 +503,21 @@ namespace Livraria.Repository.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Livraria.Domain.Entity.Emprestimo", b =>
+                {
+                    b.HasOne("Livraria.Domain.User", "User")
+                        .WithMany("Emprestimos")
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Livraria.Domain.Entity.Livro", "Livro")
+                        .WithMany("Emprestimos")
+                        .HasForeignKey("LivroId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Livraria.Domain.Entity.InstituicaoUsuario", b =>

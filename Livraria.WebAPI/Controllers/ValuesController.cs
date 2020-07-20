@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using AutoMapper;
 using Livraria.Domain;
@@ -26,19 +28,12 @@ namespace Livraria.WebAPI.Controllers
             _repo = repo;
         }
 
-        //// GET: api/<controller>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             try
             {
-                var usuarios = await _repo.GetAllAsync<User>(true);
+                var usuarios = await _repo.GetAllAsync<User>();
 
                 var results = _mapper.Map<UsuarioDto[]>(usuarios);
 
@@ -60,7 +55,7 @@ namespace Livraria.WebAPI.Controllers
         {
             try
             {
-                var livro = await _repo.GetAllAsync<Livro>(true);
+                var livro = await _repo.GetAllAsync<Livro>();
                 var results = _mapper.Map<LivroDto[]>(livro);
                 return Ok(results);
             }
@@ -71,7 +66,7 @@ namespace Livraria.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Livros
+        /// InstituicoesEnsino
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetInstituicoesEnsino")]
@@ -80,7 +75,7 @@ namespace Livraria.WebAPI.Controllers
         {
             try
             {
-                var instituicoesEnsino = await _repo.GetAllAsync<InstituicaoEnsino>(true);
+                var instituicoesEnsino = await _repo.GetAllAsync<InstituicaoEnsino>();
                 var results = _mapper.Map<InstituicaoEnsinoDto[]>(instituicoesEnsino);
                 return Ok(results);
             }
@@ -89,6 +84,7 @@ namespace Livraria.WebAPI.Controllers
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Banco Dados Falhou {ex.Message}");
             }
         }
+
 
         /// <summary>
         /// Emprestimos
@@ -99,7 +95,7 @@ namespace Livraria.WebAPI.Controllers
         {
             try
             {
-                var emprestimo = await _repo.GetAllAsync<Emprestimo>(true);
+                var emprestimo = await _repo.GetAllAsync<Emprestimo>();
                 var results = _mapper.Map<Emprestimo[]>(emprestimo);
                 return Ok(results);
             }
@@ -112,17 +108,25 @@ namespace Livraria.WebAPI.Controllers
 
         // POST api/<controller>
         [HttpPost("AdicionarEmprestimo")]
-        public async Task<IActionResult> AdicionarEmprestimo(EmprestimoDto model)
+        [AllowAnonymous]
+        public async Task<IActionResult> AdicionarEmprestimo([FromBody] EmprestimoDto model)
         {
             try
             {
-                var evento = _mapper.Map<Emprestimo>(model);
+                var retorno = await _repo.GetAllEmprestimoByLivroIdAsync(model.LivroId);
 
-                _repo.Add(evento);
+                if (retorno.Count() > 0)
+                {
+                    return this.StatusCode(StatusCodes.Status500InternalServerError, $"Livro Indisponível.");
+                }
+
+                var emprestimo = _mapper.Map<Emprestimo>(model);
+
+                _repo.Add(emprestimo);
 
                 if (await _repo.SaveChangesAsync())
                 {
-                    return Created($"/api/evento/{model.EmprestimoId}", _mapper.Map<Emprestimo>(evento));
+                    return Ok();
                 }
             }
             catch (System.Exception ex)
@@ -137,7 +141,7 @@ namespace Livraria.WebAPI.Controllers
         // POST api/<controller>
         [HttpPost("AdicionarInstituicao")]
         [AllowAnonymous]
-        public async Task<IActionResult> AdicionarInstituicao([FromBody]InstituicaoEnsinoDto model)
+        public async Task<IActionResult> AdicionarInstituicao([FromBody] InstituicaoEnsinoDto model)
         {
             try
             {
@@ -162,7 +166,8 @@ namespace Livraria.WebAPI.Controllers
 
         // POST api/<controller>
         [HttpPost("AdicionarReserva")]
-        public async Task<IActionResult> AdicionarReserva([FromBody]ReservaDto model)
+        [AllowAnonymous]
+        public async Task<IActionResult> AdicionarReserva([FromBody] ReservaDto model)
         {
             try
             {
@@ -172,7 +177,7 @@ namespace Livraria.WebAPI.Controllers
 
                 if (await _repo.SaveChangesAsync())
                 {
-                    return Created($"/api/evento/{model.ReservaId}", _mapper.Map<Reserva>(reserva));
+                    return Ok();
                 }
             }
             catch (System.Exception ex)
@@ -186,7 +191,7 @@ namespace Livraria.WebAPI.Controllers
 
         [HttpPut("InstituicaoDisable")]
         [AllowAnonymous]
-        public async Task<IActionResult> InstituicaoDisable([FromBody]InstituicaoEnsinoDto instituicaoEnsinoDtoDto)
+        public async Task<IActionResult> InstituicaoDisable([FromBody] InstituicaoEnsinoDto instituicaoEnsinoDtoDto)
         {
             try
             {
@@ -209,29 +214,109 @@ namespace Livraria.WebAPI.Controllers
 
         }
 
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpPost("AdicionarLivro")]
+        [AllowAnonymous]
+        public async Task<IActionResult> AdicionarLivro([FromBody] LivroDto model)
         {
-            return "value";
+            try
+            {
+                var livro = _mapper.Map<Livro>(model);
+
+                _repo.Add(livro);
+
+                if (await _repo.SaveChangesAsync())
+                {
+                    return Ok();
+                }
+            }
+            catch (System.Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Banco Dados Falhou {ex.Message}");
+            }
+
+            return BadRequest();
         }
 
-        // POST api/<controller>
-        [HttpPost]
-        public void Post([FromBody]string value)
+        [HttpPut("LivroDisable")]
+        [AllowAnonymous]
+        public async Task<IActionResult> LivroDisable([FromBody] LivroDto livroDto)
         {
+            try
+            {
+                var model = await _repo.GetById<Livro>(livroDto.LivroId);
+                model.Ativo = false;
+                _repo.Update(model);
+
+                if (await _repo.SaveChangesAsync())
+                {
+                    return Ok();
+                }
+
+            }
+            catch (System.Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Banco Dados Falhou {ex.Message}");
+            }
+
+            return BadRequest();
+
         }
 
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+
+        [HttpPost("upload")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Upload()
         {
+            try
+            {
+                var file = Request.Form.Files[0];
+                var folderName = Path.Combine("wwwroot", "img");
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+
+                if (file.Length > 0)
+                {
+                    var filename = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName;
+                    var fullPath = Path.Combine(pathToSave, filename.Replace("\"", " ").Trim());
+
+                    using var stream = new FileStream(fullPath, FileMode.Create);
+                    file.CopyTo(stream);
+                }
+
+                return Ok();
+            }
+            catch (System.Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Banco Dados Falhou {ex.Message}");
+            }
+
         }
 
-        // DELETE api/<controller>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpPut("AlterarLivro")]
+        [AllowAnonymous]
+        public async Task<IActionResult> AlterarLivro([FromBody] LivroDto livroDto)
         {
+            try
+            {
+                var model = await _repo.GetById<Livro>(livroDto.LivroId);
+
+                _mapper.Map(livroDto, model);
+                 model.Ativo = true;
+
+                _repo.Update(model);
+
+                if (await _repo.SaveChangesAsync())
+                {
+                    return Ok();
+                }
+
+            }
+            catch (System.Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Banco Dados Falhou {ex.Message}");
+            }
+
+            return BadRequest();
+
         }
     }
 }

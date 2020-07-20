@@ -34,7 +34,7 @@ export class RegistrationComponent implements OnInit {
       userName: ['', Validators.required],
       cpf:  ['', Validators.required],
       endereco: [''],
-
+      telefone: [''],
       passwords: this.fb.group({
         password: ['', [Validators.required, Validators.minLength(4)]],
         confirmPassword: ['', Validators.required]
@@ -60,7 +60,7 @@ export class RegistrationComponent implements OnInit {
         this.registerForm.value);
       this.usuarioService.register(this.user).subscribe(
         () => {
-          this.router.navigate(['/user/login']);
+          this.router.navigate(['/usuarios']);
           this.toastr.success('Cadastro Realizado');
         }, error => {
           const erro = error.error;

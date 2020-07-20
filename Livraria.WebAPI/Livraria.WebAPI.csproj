@@ -14,13 +14,20 @@
 
   <ItemGroup>
     <Compile Remove="Migrations\**" />
+    <Compile Remove="Models\**" />
     <Content Remove="Migrations\**" />
+    <Content Remove="Models\**" />
     <EmbeddedResource Remove="Migrations\**" />
+    <EmbeddedResource Remove="Models\**" />
     <None Remove="Migrations\**" />
+    <None Remove="Models\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
+    <Content Remove="wwwroot\img\0.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Resources\Images\" />
     <Folder Include="Resources\" />
   </ItemGroup>

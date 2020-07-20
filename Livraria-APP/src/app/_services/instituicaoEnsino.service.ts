@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { InstituicaoEnsino } from '../_models/InstituicaoEnsino';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class InstituicaoEnsinoService {
 
 constructor(private http: HttpClient) { }
 
-baseURL = 'https://localhost:44324/api/Values/';
+baseURL = environment.apiUrl + 'api/Values/';
 
   getAllInstituicoesEnsino(): Observable<InstituicaoEnsino[]> {
     return this.http.get<InstituicaoEnsino[]>(`${this.baseURL}GetInstituicoesEnsino`);

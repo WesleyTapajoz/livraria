@@ -2,10 +2,11 @@ import { User } from './User';
 
 export class Emprestimo
 {
-  construcor(){}
   emprestimoId: number;
-  datInicio: Date;
-  dataFim: Date;
-  usuarioId: number;
+  datInicio: string;
+  dataFim: string;
+  dataEntrega: string;
+  id: string;
   user: User;
+  livroId: number;
 }

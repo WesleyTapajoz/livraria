@@ -48,7 +48,7 @@ namespace Livraria.WebAPI.Controllers
         {
             try
             {
-                var users = await _repo.GetAllAsync<User>(true);
+                var users = await _repo.GetAllAsync<User>();
                 var results = _mapper.Map<UserDto[]>(users);
                 return Ok(results);
             }
@@ -75,6 +75,32 @@ namespace Livraria.WebAPI.Controllers
                 var user = _mapper.Map<User>(userDto);
 
                 var result = await _userManager.CreateAsync(user, userDto.Password);
+
+                var userToReturn = _mapper.Map<UserDto>(user);
+
+                if (result.Succeeded)
+                {
+                    return Ok();
+                }
+
+                return BadRequest(result.Errors);
+            }
+            catch (System.Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Banco Dados Falhou {ex.Message}");
+            }
+        }
+
+        [HttpPost("AdicionarUsuario")]
+        [AllowAnonymous]
+        public async Task<IActionResult> AdicionarUsuario([FromBody]UserDto userDto)
+        {
+            try
+            {
+                userDto.Ativo = true;
+                var user = _mapper.Map<User>(userDto);
+
+                var result = await _userManager.CreateAsync(user);
 
                 var userToReturn = _mapper.Map<UserDto>(user);
 
@@ -107,7 +133,6 @@ namespace Livraria.WebAPI.Controllers
                 user.FullName = userDto.FullName;
                 user.Endereco = userDto.Endereco;
                 user.Email = userDto.Email;
-                user.PasswordHash = userDto.Password;
                 user.CPF = userDto.CPF;
 
                 var result = await _userManager.UpdateSecurityStampAsync(user);
@@ -153,7 +178,7 @@ namespace Livraria.WebAPI.Controllers
 
         [HttpPost("Login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(UserLoginDto userLogin)
+        public async Task<IActionResult> Login([FromBody]UserLoginDto userLogin)
         {
             try
             {

@@ -23,8 +23,10 @@ import { LivroService } from './_services/livro.service';
 import { EmprestimoComponent } from './emprestimo/emprestimo.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { InstituicaoEnsinoComponent } from './instituicao-ensino/instituicao-ensino.component';
+import { NgxMaskModule, IConfig  } from 'ngx-mask';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
-
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 @NgModule({
    declarations: [
       AppComponent,
@@ -39,12 +41,12 @@ import { InstituicaoEnsinoComponent } from './instituicao-ensino/instituicao-ens
       DashboardComponent,
       EmprestimoComponent,
       UsuarioComponent,
-      InstituicaoEnsinoComponent,
       InstituicaoEnsinoComponent
    ],
    imports: [
       BrowserModule,
       BrowserAnimationsModule,
+      NgxMaskModule.forRoot(options),
       ModalModule.forRoot(),
       ToastrModule.forRoot({
         timeOut: 3000,
@@ -55,7 +57,8 @@ import { InstituicaoEnsinoComponent } from './instituicao-ensino/instituicao-ens
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TooltipModule.forRoot()
   ],
   providers: [
 

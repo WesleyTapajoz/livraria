@@ -1,10 +1,6 @@
-import { Reserva } from "./Reserva";
-
-export interface User{
+export class User{
   id: number;
-  userName: string;
   email: string;
-  password: string;
   fullName: string;
   endereco: string;
   cpf: string;

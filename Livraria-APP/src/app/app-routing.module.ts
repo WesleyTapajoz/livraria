@@ -10,11 +10,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { InstituicaoEnsinoComponent } from './instituicao-ensino/instituicao-ensino.component';
 
-// const routes: Routes = [
-//   { path: 'reservas', component: ReservasComponent } ,
-//   { path: 'livros', component: LivroComponent }
-// ];
-
 const routes: Routes = [
   {
     path: 'user', component: UserComponent,
@@ -23,11 +18,11 @@ const routes: Routes = [
       { path: 'registration', component: RegistrationComponent }
     ]
   },
-  { path: 'reservas', component: ReservasComponent  } ,
-  { path: 'livros', component: LivroComponent },
+  { path: 'reservas', component: ReservasComponent, canActivate: [AuthGuard]  } ,
+  { path: 'livros', component: LivroComponent, canActivate: [AuthGuard] },
   { path: 'dashboard', component: DashboardComponent  },
-  { path: 'usuarios', component: UsuarioComponent },
-  { path: 'instituicoesensino', component: InstituicaoEnsinoComponent },
+  { path: 'usuarios', component: UsuarioComponent, canActivate: [AuthGuard] },
+  { path: 'instituicoesensino', component: InstituicaoEnsinoComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: 'dashboard', pathMatch: 'full' },
 ];

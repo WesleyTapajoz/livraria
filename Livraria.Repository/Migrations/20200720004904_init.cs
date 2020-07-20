@@ -54,21 +54,6 @@ namespace Livraria.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Emprestimos",
-                columns: table => new
-                {
-                    EmprestimoId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DatInicio = table.Column<DateTime>(nullable: false),
-                    DataFim = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Emprestimos", x => x.EmprestimoId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "InstituicoesEnsino",
                 columns: table => new
                 {
@@ -228,15 +213,16 @@ namespace Livraria.Repository.Migrations
                 name: "InstituicaoUsuario",
                 columns: table => new
                 {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     InstituicaoUsuarioId = table.Column<int>(nullable: false),
-                    Id = table.Column<int>(nullable: false),
                     InstituicaoEnsinoId = table.Column<int>(nullable: true),
                     UserId = table.Column<int>(nullable: true),
                     Ativo = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_InstituicaoUsuario", x => new { x.Id, x.InstituicaoUsuarioId });
+                    table.PrimaryKey("PK_InstituicaoUsuario", x => x.Id);
                     table.ForeignKey(
                         name: "FK_InstituicaoUsuario_InstituicoesEnsino_InstituicaoEnsinoId",
                         column: x => x.InstituicaoEnsinoId,
@@ -251,40 +237,69 @@ namespace Livraria.Repository.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Emprestimos",
+                columns: table => new
+                {
+                    EmprestimoId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DataInicio = table.Column<DateTime>(nullable: false),
+                    DataFim = table.Column<DateTime>(nullable: false),
+                    DataEntrega = table.Column<DateTime>(nullable: true),
+                    Id = table.Column<int>(nullable: false),
+                    LivroId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Emprestimos", x => x.EmprestimoId);
+                    table.ForeignKey(
+                        name: "FK_Emprestimos_AspNetUsers_Id",
+                        column: x => x.Id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Emprestimos_Livros_LivroId",
+                        column: x => x.LivroId,
+                        principalTable: "Livros",
+                        principalColumn: "LivroId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Ativo", "CPF", "ConcurrencyStamp", "Email", "EmailConfirmed", "Endereco", "FullName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Telefone", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { 1, 0, true, "019.266.931-16", "8e8caf4f-bd1b-4918-939a-be505e5d8a01", "shakespeare@outlook.com", false, "Stratford-upon-Avon, Reino Unido", "shakespeare", false, null, null, null, null, null, false, null, "65 99999-9999", false, "Shakespeare" },
-                    { 2, 0, true, "019.266.931-17", "eb6a5ed5-32b8-42b8-96bf-7cbb335dbea4", "machadosssis@outlook.com", false, "Rio de Janeiro, Brasil", "Machado de Assis", false, null, null, null, null, null, false, null, "65 99999-9999", false, "machadoassis" },
-                    { 3, 0, true, "019.266.931-17", "8f8e1169-7e33-412f-9c3f-f859c9358bff", "wesley@outlook.com", false, "Cuiabá, Brasil", "Wesley Tapajoz", false, null, null, null, null, null, false, null, "65 99999-9999", false, "wesley" },
-                    { 4, 0, true, "019.266.931-17", "08a2ddf0-510a-4079-986b-ab9ac301cd7e", "tapajoz@outlook.com", false, "Várzea Grande, Brasil", "Wesley Douglas", false, null, null, null, null, null, false, null, "65 99999-9999", false, "douglas" }
+                    { 1, 0, true, "019.266.931-16", "deadc150-c27a-49cb-b8fd-9a0447462150", "shakespeare@outlook.com", false, "Stratford-upon-Avon, Reino Unido", "shakespeare", false, null, null, null, null, null, false, null, "65 99999-9999", false, "Shakespeare" },
+                    { 2, 0, true, "019.266.931-17", "64c3b57a-076c-457e-af60-c6b81d83df05", "machadosssis@outlook.com", false, "Rio de Janeiro, Brasil", "Machado de Assis", false, null, null, null, null, null, false, null, "65 99999-9999", false, "machadoassis" },
+                    { 3, 0, true, "019.266.931-17", "bb9170de-af42-4cad-a8ee-7a789e7cad73", "wesley@outlook.com", false, "Cuiabá, Brasil", "Wesley Tapajoz", false, null, null, null, null, null, false, null, "65 99999-9999", false, "wesley" },
+                    { 4, 0, true, "019.266.931-17", "3ded1f05-14df-44df-9cdf-d5e2e2678762", "tapajoz@outlook.com", false, "Várzea Grande, Brasil", "Wesley Douglas", false, null, null, null, null, null, false, null, "65 99999-9999", false, "douglas" }
                 });
 
             migrationBuilder.InsertData(
                 table: "InstituicaoUsuario",
-                columns: new[] { "Id", "InstituicaoUsuarioId", "Ativo", "InstituicaoEnsinoId", "UserId" },
+                columns: new[] { "Id", "Ativo", "InstituicaoEnsinoId", "InstituicaoUsuarioId", "UserId" },
                 values: new object[,]
                 {
-                    { 3, 1, false, null, null },
-                    { 4, 1, false, null, null }
+                    { 3, false, null, 1, null },
+                    { 4, false, null, 1, null }
                 });
 
             migrationBuilder.InsertData(
                 table: "InstituicoesEnsino",
                 columns: new[] { "InstituicaoEnsinoId", "Ativo", "CPNJ", "Endereco", "Nome", "Telefone" },
-                values: new object[] { 1, false, "02.402.105/0001-00", "Boa Esperança, Cuiabá", "UFMT", "65 9999-9999" });
+                values: new object[] { 1, true, "02.402.105/0001-00", "Boa Esperança, Cuiabá", "UFMT", "65 9999-9999" });
 
             migrationBuilder.InsertData(
                 table: "Livros",
                 columns: new[] { "LivroId", "Ativo", "Autor", "Genero", "ImagemURL", "Sinopse", "Titulo" },
                 values: new object[,]
                 {
-                    { 1, false, "Shakespeare", "Romance", "", "Romeu e Julieta é a primeira das grandes tragédias de William Shakespeare...", "Romeu e Julieta" },
-                    { 2, false, "Shakespeare", "Romance", "", "A obsessão de uma vingança onde a dúvida e o desespero concentrados nos monólogos do príncipe Hamlet adquirem uma impressionante dimensão trágica...", "Hamlet" },
-                    { 3, false, "Machado de Assis", "Romance", "", "Mas criando Capitu, a espantosa menina de 'olhos oblíquos e dissimulados', de 'olhos de ressaca'...", "Dom Casmurro" },
-                    { 4, false, "Machado de Assis", "Romance", "", "A libertação dos escravos e a Proclamação da República formam o pano de fundo para a história de irmãos gêmeos rivais...", "Esaú e Jacó" }
+                    { 1, true, "Shakespeare", "Romance", "romeuejulieta.jpg", "Romeu e Julieta é a primeira das grandes tragédias de William Shakespeare...", "Romeu e Julieta" },
+                    { 2, true, "Shakespeare", "Romance", "hamlet.jpg", "A obsessão de uma vingança onde a dúvida e o desespero concentrados nos monólogos do príncipe Hamlet adquirem uma impressionante dimensão trágica...", "Hamlet" },
+                    { 3, true, "Machado de Assis", "Romance", "domcasmurro.jpg", "Mas criando Capitu, a espantosa menina de 'olhos oblíquos e dissimulados', de 'olhos de ressaca'...", "Dom Casmurro" },
+                    { 4, true, "Machado de Assis", "Romance", "esauejaco.jpg", "A libertação dos escravos e a Proclamação da República formam o pano de fundo para a história de irmãos gêmeos rivais...", "Esaú e Jacó" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -327,6 +342,16 @@ namespace Livraria.Repository.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Emprestimos_Id",
+                table: "Emprestimos",
+                column: "Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Emprestimos_LivroId",
+                table: "Emprestimos",
+                column: "LivroId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_InstituicaoUsuario_InstituicaoEnsinoId",
                 table: "InstituicaoUsuario",
                 column: "InstituicaoEnsinoId");
@@ -361,13 +386,13 @@ namespace Livraria.Repository.Migrations
                 name: "InstituicaoUsuario");
 
             migrationBuilder.DropTable(
-                name: "Livros");
-
-            migrationBuilder.DropTable(
                 name: "Reservas");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Livros");
 
             migrationBuilder.DropTable(
                 name: "InstituicoesEnsino");

@@ -36,8 +36,24 @@ namespace Livraria.Repository.Data
             }
               );
 
-            modelBuilder.Entity<InstituicaoUsuario>()
-            .HasKey(IU => new { IU.Id, IU.InstituicaoUsuarioId });
+
+            modelBuilder.Entity<Emprestimo>(userRole =>
+            {
+                userRole.HasKey(em => new { em.EmprestimoId });
+
+                userRole.HasOne(ur => ur.Livro)
+                    .WithMany(r => r.Emprestimos)
+                    .HasForeignKey(ur => ur.LivroId)
+                    .IsRequired();
+
+                userRole.HasOne(ur => ur.User)
+                    .WithMany(r => r.Emprestimos)
+                    .HasForeignKey(ur => ur.Id)
+                    .IsRequired();
+            }
+             );
+
+          
             modelBuilder.Seed();
 
         }

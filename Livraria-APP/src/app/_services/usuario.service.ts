@@ -4,6 +4,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { User } from '../_models/User';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,7 @@ import { User } from '../_models/User';
 export class UsuarioService {
 
 constructor(private http: HttpClient) { }
-baseURL = 'https://localhost:44324/api/user/';
-
+baseURL = environment.apiUrl + 'api/user/';
 jwtHelper = new JwtHelperService();
 decodedToken: any;
 
@@ -31,10 +31,16 @@ login(model: any) {
     );
 }
 
-
 register(model: any) {
-  return this.http.post(`${this.baseURL}register`, model);
+  console.log('model', model);
+  return this.http.post(`${this.baseURL}Register`, model);
 }
+
+adicionarUsuario(model: any) {
+  console.log('model', model);
+  return this.http.post(`${this.baseURL}AdicionarUsuario`, model);
+}
+
 
 userEdit(model: any) {
   return this.http.put(`${this.baseURL}UserEdit`, model);

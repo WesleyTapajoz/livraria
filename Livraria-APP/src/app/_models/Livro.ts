@@ -1,7 +1,8 @@
-export interface Livro{
+ export class Livro{
   livroId: number;
   titulo: string;
   genero: string;
   sinopse: string;
-  imagemUrl: string;
+  imagemURL: string;
+  ativo: boolean;
 }

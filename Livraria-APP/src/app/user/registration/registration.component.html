@@ -38,12 +38,21 @@
   </div>
 </div>
 <div class="form-group required">
+  <label for="">Telefone:</label>
+  <input mask="(00) 00000 0000" type="text" class="form-control" formControlName="telefone" [ngClass]="{'is-invalid': registerForm.get('telefone').errors &&
+  registerForm.get('telefone').touched }"  placeholder="Insira o Telefone" />
+  <div *ngIf="registerForm.get('telefone').hasError('required') &&
+  registerForm.get('telefone').touched" class="invalid-feedback">
+  Telefone é obrigatório.
+</div>
+</div>
+<div class="form-group required">
   <label for="">CPF:</label>
-  <input type="text" class="form-control" formControlName="cpf" [ngClass]="{'is-invalid': registerForm.get('cpf').errors &&
+  <input mask="000.000.000-00" type="text" class="form-control" formControlName="cpf" [ngClass]="{'is-invalid': registerForm.get('cpf').errors &&
   registerForm.get('cpf').touched }" placeholder="000.000.000-00" />
   <div *ngIf="registerForm.get('cpf').hasError('required') &&
   registerForm.get('cpf').touched" class="invalid-feedback">
-  Nome Completo é obrigatório.
+  CPF obrigatório.
 </div>
 </div>
 <div class="form-group required">
@@ -52,7 +61,7 @@
   registerForm.get('endereco').touched }" placeholder="Endereço" />
   <div *ngIf="registerForm.get('endereco').hasError('required') &&
   registerForm.get('endereco').touched" class="invalid-feedback">
-  Nome Completo é obrigatório.
+  Endereço obrigatório.
 </div>
 </div>
 
@@ -90,7 +99,7 @@ Confirmação não confere
 <div class="form-row">
   <div class="form-group col-md-8 offset-md-2">
     <button class="btn btn-lg btn-success btn-block" [disabled]="!registerForm.valid"
-    (click)="cadastrarUsuario()">Registar</button>
+    (click)="cadastrarUsuario()">Salvar</button>
   </div>
 </div>
 </form>

@@ -29,10 +29,10 @@
     <tr *ngFor="let instituicaoEnsino of instituicoesEnsino">
       <td></td>
       <td>{{instituicaoEnsino.nome}}</td>
-      <td>{{instituicaoEnsino.cnpj}}</td>
+      <td>{{instituicaoEnsino.cnpj  | mask: '00.000.000/0000-00' }}</td>
       <td>{{instituicaoEnsino.endereco}}</td>
-      <td>{{instituicaoEnsino.telefone}}</td>
-      <td>{{instituicaoEnsino.ativo }}</td>
+      <td>{{instituicaoEnsino.telefone | mask: '(00) 00000-0000'}}</td>
+      <td>{{instituicaoEnsino.ativo == true ? "Ativo" : "Inativo"}}</td>
       <td>
         <div class="btn-group">
           <button class="btn btn-sm btn-success" tooltip="Editar" (click)="openModal(template)">
@@ -71,7 +71,7 @@
     <div class="form-row">
       <div class="col-lg-8">
         <form [formGroup]="registerForm">
-          <div class="form-group required">
+          <div class="form-group">
             <label for="">Nome:</label>
             <input type="text" class="form-control" formControlName="nome" [ngClass]="{'is-invalid': registerForm.get('nome').errors &&
             registerForm.get('nome').touched }" placeholder="Nome Instituição"  />
@@ -91,7 +91,7 @@
       </div>
       <div class="form-group">
         <label for="">CNPJ:</label>
-        <input class="form-control" type="text" formControlName="cnpj" [ngClass]="{ 'is-invalid': registerForm.get('cnpj').errors &&
+        <input mask='00.000.000/0000-00' class="form-control" type="text" formControlName="cnpj" [ngClass]="{ 'is-invalid': registerForm.get('cnpj').errors &&
         registerForm.get('cnpj').touched}" placeholder="Insira o CNPJ" />
         <div *ngIf="registerForm.get('cnpj').hasError('required') &&
         registerForm.get('cnpj').touched" class="invalid-feedback">
@@ -104,11 +104,11 @@
   </div>
   <div class="form-group required">
     <label for="">Telefone:</label>
-    <input type="text" class="form-control" formControlName="telefone" [ngClass]="{'is-invalid': registerForm.get('telefone').errors &&
+    <input mask="(00) 00000-0000" type="text" class="form-control" formControlName="telefone" [ngClass]="{'is-invalid': registerForm.get('telefone').errors &&
     registerForm.get('telefone').touched }"  placeholder="Insira o Telefone" />
     <div *ngIf="registerForm.get('telefone').hasError('required') &&
     registerForm.get('telefone').touched" class="invalid-feedback">
-    Nome Completo é obrigatório.
+    Telefone é obrigatório.
   </div>
 </div>
 </form>

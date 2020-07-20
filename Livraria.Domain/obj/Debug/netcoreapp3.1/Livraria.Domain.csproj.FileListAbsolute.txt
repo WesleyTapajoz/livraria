@@ -1,8 +1,9 @@
 C:\Git\ewave-livraria-plenoII\Livraria.Domain\bin\Debug\netcoreapp3.1\Livraria.Domain.deps.json
 C:\Git\ewave-livraria-plenoII\Livraria.Domain\bin\Debug\netcoreapp3.1\Livraria.Domain.dll
 C:\Git\ewave-livraria-plenoII\Livraria.Domain\bin\Debug\netcoreapp3.1\Livraria.Domain.pdb
-C:\Git\ewave-livraria-plenoII\Livraria.Domain\obj\Debug\netcoreapp3.1\Livraria.Domain.csprojAssemblyReference.cache
 C:\Git\ewave-livraria-plenoII\Livraria.Domain\obj\Debug\netcoreapp3.1\Livraria.Domain.AssemblyInfoInputs.cache
 C:\Git\ewave-livraria-plenoII\Livraria.Domain\obj\Debug\netcoreapp3.1\Livraria.Domain.AssemblyInfo.cs
+C:\Git\ewave-livraria-plenoII\Livraria.Domain\obj\Debug\netcoreapp3.1\Livraria.Domain.csproj.CoreCompileInputs.cache
 C:\Git\ewave-livraria-plenoII\Livraria.Domain\obj\Debug\netcoreapp3.1\Livraria.Domain.dll
 C:\Git\ewave-livraria-plenoII\Livraria.Domain\obj\Debug\netcoreapp3.1\Livraria.Domain.pdb
+C:\Git\ewave-livraria-plenoII\Livraria.Domain\obj\Debug\netcoreapp3.1\Livraria.Domain.csprojAssemblyReference.cache

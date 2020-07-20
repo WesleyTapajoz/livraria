@@ -1,6 +1,8 @@
-﻿using Livraria.Repository.Data;
+﻿using Livraria.Domain.Entity;
+using Livraria.Repository.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Livraria.Repository
@@ -36,7 +38,7 @@ namespace Livraria.Repository
             return (await _context.SaveChangesAsync()) > 0;
         }
 
-        public Task<T[]> GetAllAsync<T>(bool includePalestrantes) where T : class
+        public Task<T[]> GetAllAsync<T>() where T : class
         {
             return _context.Set<T>().ToArrayAsync();
         }
@@ -45,5 +47,11 @@ namespace Livraria.Repository
         {
             return await _context.Set<T>().FindAsync(id);
         }
+
+        public async Task<Emprestimo[]> GetAllEmprestimoByLivroIdAsync(int livroId)
+        {
+            return await _context.Emprestimos.Where(x => x.LivroId == livroId && x.DataEntrega == null).ToArrayAsync();
+        }
+
     }
 }

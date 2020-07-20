@@ -1,6 +1,6 @@
 export class Reserva {
   reservaId: number;
-  usuarioId: number;
-  dataReserva: Date;
+  id: string;
+  dataReserva: string;
   livroId: number;
 }

@@ -19,6 +19,7 @@ namespace Livraria.Repository.Data
                CPNJ = "02.402.105/0001-00",
                Endereco = "Boa Esperança, Cuiabá",
                Telefone = "65 9999-9999",
+               Ativo =  true
            });
 
            modelBuilder.Entity<User>().HasData(
@@ -91,8 +92,9 @@ namespace Livraria.Repository.Data
                    Genero = "Romance",
                    Titulo = "Romeu e Julieta",
                    Sinopse = "Romeu e Julieta é a primeira das grandes tragédias de William Shakespeare...",
-                   ImagemURL = "",
-                   Autor = "Shakespeare"
+                   ImagemURL = "romeuejulieta.jpg",
+                   Autor = "Shakespeare",
+                   Ativo =  true
                },
                 new Livro
                 {
@@ -100,8 +102,9 @@ namespace Livraria.Repository.Data
                     Genero = "Romance",
                     Titulo = "Hamlet",
                     Sinopse = "A obsessão de uma vingança onde a dúvida e o desespero concentrados nos monólogos do príncipe Hamlet adquirem uma impressionante dimensão trágica...",
-                    ImagemURL = "",
-                    Autor = "Shakespeare"
+                    ImagemURL = "hamlet.jpg",
+                    Autor = "Shakespeare",
+                    Ativo =  true
                 },
                 new Livro
                 {
@@ -109,8 +112,9 @@ namespace Livraria.Repository.Data
                     Genero = "Romance",
                     Titulo = "Dom Casmurro",
                     Sinopse = "Mas criando Capitu, a espantosa menina de 'olhos oblíquos e dissimulados', de 'olhos de ressaca'...",
-                    ImagemURL = "",
-                    Autor = "Machado de Assis"
+                    ImagemURL = "domcasmurro.jpg",
+                    Autor = "Machado de Assis",
+                    Ativo =  true
                 },
                 new Livro
                 {
@@ -118,8 +122,9 @@ namespace Livraria.Repository.Data
                     Genero = "Romance",
                     Titulo = "Esaú e Jacó",
                     Sinopse = "A libertação dos escravos e a Proclamação da República formam o pano de fundo para a história de irmãos gêmeos rivais...",
-                    ImagemURL = "",
-                    Autor = "Machado de Assis"
+                    ImagemURL = "esauejaco.jpg",
+                    Autor = "Machado de Assis",
+                    Ativo =  true
                 }
             );
         }
