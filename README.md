@@ -18,3 +18,9 @@ dotnet ef --startup-project ../Livraria.WebAPI database update após concluido f
 Para atender o maximo solicitado na prova eu desenvolvi um aplicativo spa com angular.
 Foi desenvolvido toda parte de autenticação.
 E todas as funcionalidades.
+
+Arquitetura desenvolvida DDD
+Padrão Repository
+.NET Core
+Angular 9
+REST
