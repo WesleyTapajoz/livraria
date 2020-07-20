@@ -14,3 +14,7 @@ dotnet ef --startup-project ../Livraria.WebAPI database update após concluido f
 7- Execute o comando dotnet watch run
 8- Aponte o segundo para o projeto C:\Git\ewave-livraria-plenoII\Livraria-APP> Execute o comando npm i
 9- Após a execução, execute ng serve
+
+Para atender o maximo solicitado na prova eu desenvolvi um aplicativo spa com angular.
+Foi desenvolvido toda parte de autenticação.
+E todas as funcionalidades.
